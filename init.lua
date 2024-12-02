@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -120,6 +120,60 @@ end)
 
 -- Enable break indent
 vim.opt.breakindent = true
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.wrap = true
+vim.opt.tabstop = 8
+vim.opt.expandtab = true
+vim.opt.textwidth = 76
+vim.opt.hlsearch = true
+vim.opt.wildmode = { 'longest', 'list' }
+vim.opt.wildignore = { '*.o', '*.a', '*.lo', '*.so' }
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.startofline = false
+-- 's', ':0', 'g0', 'E-s', 't0', 'c0', 'C1', '(0'
+vim.opt.cino = {
+  's',
+  'e0',
+  'n0',
+  'f0',
+  '{0',
+  '}0',
+  '^0',
+  'L-1',
+  ':0',
+  '=s',
+  'l0',
+  'b0',
+  'g0',
+  'hs',
+  'N0',
+  'E-s',
+  'ps',
+  't0',
+  'is',
+  '+s',
+  'c0',
+  'C1',
+  '/0',
+  '(0',
+  'us',
+  'U0',
+  'w0',
+  'W0',
+  'k0',
+  'm0',
+  'j0',
+  'J0',
+  ')20',
+  '*70',
+  '#0',
+  'P0',
+}
+vim.opt.mousehide = true
+vim.opt.visualbell = true
+vim.opt.errorbells = true
 
 -- Save undo history
 vim.opt.undofile = true
@@ -147,6 +201,7 @@ vim.opt.splitbelow = true
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.g.c_space_errors = true
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -436,6 +491,9 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
     end,
   },
+  { -- git tools
+    'tpope/vim-fugitive',
+  },
 
   -- LSP Plugins
   {
@@ -615,7 +673,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          filetypes = { 'c', 'cc', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+        },
+        cmake = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -886,6 +947,9 @@ require('lazy').setup({
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
+      end
+      statusline.section_git = function()
+        return '%{FugitiveStatusline()}'
       end
 
       -- ... and there is more!
