@@ -84,6 +84,15 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+-- Start check of git base (top level) directory
+GIT_BASE_DIR = ''
+
+local on_git_exit = function(res)
+  GIT_BASE_DIR = res.stdout
+  GIT_BASE_DIR = string.gsub(GIT_BASE_DIR, '\n$', '')
+  GIT_BASE_DIR = string.gsub(GIT_BASE_DIR, '\r$', '')
+end
+local git_base_dir_cmd = vim.system({ 'git', 'rev-parse', '--show-toplevel' }, { text = true }, on_git_exit)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -1029,6 +1038,30 @@ require('lazy').setup({
     },
   },
 })
+
+git_base_dir_cmd:wait()
+
+function Recheck_make_prog()
+  if GIT_BASE_DIR ~= '' then
+    if vim.fn.filereadable(GIT_BASE_DIR .. '/build.ninja') then
+      vim.opt.makeprg = 'ninja -C ' .. GIT_BASE_DIR
+    else
+      vim.opt.makeprg = 'make'
+    end
+  else
+    vim.opt.makeprg = 'make'
+  end
+end
+
+Recheck_make_prog()
+if GIT_BASE_DIR ~= '' then
+  vim.cmd('cd ' .. GIT_BASE_DIR)
+end
+
+vim.api.nvim_create_user_command('Checkmake', function()
+  Recheck_make_prog()
+  print(vim.o.makeprg)
+end, {})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
