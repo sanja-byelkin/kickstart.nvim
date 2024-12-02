@@ -135,6 +135,7 @@ vim.opt.wrap = true
 vim.opt.tabstop = 8
 vim.opt.expandtab = true
 vim.opt.textwidth = 76
+vim.opt.colorcolumn = '80'
 vim.opt.hlsearch = true
 vim.opt.wildmode = { 'longest', 'list' }
 vim.opt.wildignore = { '*.o', '*.a', '*.lo', '*.so' }
