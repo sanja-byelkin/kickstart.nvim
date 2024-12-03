@@ -184,6 +184,7 @@ vim.opt.cino = {
 vim.opt.mousehide = true
 vim.opt.visualbell = true
 vim.opt.errorbells = true
+vim.opt.autowrite = true
 
 -- Save undo history
 vim.opt.undofile = true
