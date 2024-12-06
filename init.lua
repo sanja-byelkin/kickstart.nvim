@@ -513,6 +513,9 @@ require('lazy').setup({
   { -- git tools
     'tpope/vim-fugitive',
   },
+  {
+    'ntpeters/vim-better-whitespace',
+  },
 
   -- LSP Plugins
   {
