@@ -926,6 +926,27 @@ require('lazy').setup({
     end,
   },
   --[[
+  {
+    'Tsuzat/NeoSolarized.nvim',
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      vim.cmd(" colorscheme NeoSolarized ")
+    end,
+  },
+  {
+    'maxmx03/solarized.nvim',
+    lazy = false,
+    priority = 1000,
+    ---@type solarized.config
+    opts = {},
+    config = function(_, opts)
+      vim.o.termguicolors = true
+      vim.o.background = 'dark'
+      require('solarized').setup(opts)
+      vim.cmd.colorscheme 'solarized'
+    end,
+  },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
