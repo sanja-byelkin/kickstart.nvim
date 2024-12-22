@@ -1113,5 +1113,10 @@ vim.api.nvim_create_user_command('Checkmake', function()
   print(vim.o.makeprg)
 end, {})
 
+if vim.g.neovide then
+  vim.o.guifont = 'ZedMono Nerd Font:h12.5'
+  vim.g.neovide_transparency = 0.95
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
