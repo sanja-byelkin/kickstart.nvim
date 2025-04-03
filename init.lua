@@ -1115,7 +1115,7 @@ end, {})
 
 if vim.g.neovide then
   vim.o.guifont = 'ZedMono Nerd Font:h12.5'
-  vim.g.neovide_transparency = 0.95
+  vim.g.neovide_opacity = 0.95
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
