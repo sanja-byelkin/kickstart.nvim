@@ -251,6 +251,13 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
+-- Copy "filename:line" to system clipboard for use in a debugger
+vim.keymap.set('n', '<leader>l', function()
+  local loc = vim.fn.expand '%:t' .. ':' .. vim.fn.line '.'
+  vim.fn.setreg('+', loc)
+  vim.notify(loc, vim.log.levels.INFO)
+end, { desc = 'Copy file:[L]ine to clipboard' })
+
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
