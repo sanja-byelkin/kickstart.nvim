@@ -258,6 +258,24 @@ vim.keymap.set('n', '<leader>l', function()
   vim.notify(loc, vim.log.levels.INFO)
 end, { desc = 'Copy file:[L]ine to clipboard' })
 
+vim.keymap.set('n', '<leader>b', function()
+  local file = vim.fn.expand '%:p'
+  if file == '' then
+    vim.notify('No file', vim.log.levels.WARN)
+    return
+  end
+  vim.fn.jobstart({ 'git', 'gui', 'blame', file }, { detach = true })
+end, { desc = 'Git [B]lame (gui)' })
+
+vim.keymap.set('n', '<leader>k', function()
+  local file = vim.fn.expand '%:p'
+  if file == '' then
+    vim.notify('No file', vim.log.levels.WARN)
+    return
+  end
+  vim.fn.jobstart({ 'gitk', file }, { detach = true })
+end, { desc = 'Git[k] log for file' })
+
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
