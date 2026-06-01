@@ -264,7 +264,8 @@ vim.keymap.set('n', '<leader>b', function()
     vim.notify('No file', vim.log.levels.WARN)
     return
   end
-  vim.fn.jobstart({ 'git', 'gui', 'blame', file }, { detach = true })
+  local line = vim.fn.line '.'
+  vim.fn.jobstart({ 'git', 'gui', 'blame', '--line=' .. line, file }, { detach = true })
 end, { desc = 'Git [B]lame (gui)' })
 
 vim.keymap.set('n', '<leader>k', function()
